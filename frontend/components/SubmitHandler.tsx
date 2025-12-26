@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import { useAccount, useWriteContract, useWaitForTransactionReceipt, useWalletClient } from "wagmi";
 import { useStore } from "@/store/useStore";
-import { encryptAnswers, userDecrypt } from "@/lib/fhe";
 import { CONTRACT_ADDRESS } from "@/lib/constants";
 import { CONTRACT_ABI } from "@/lib/contract";
 import { Loading } from "./Loading";
@@ -42,6 +41,7 @@ export function SubmitHandler() {
     const submit = async () => {
       try {
         setIsSubmitting(true);
+        const { encryptAnswers } = await import("@/lib/fhe");
         const encrypted = await encryptAnswers(CONTRACT_ADDRESS, address, answers);
         
         // Clear plaintext answers immediately after encryption
@@ -109,6 +109,7 @@ export function SubmitHandler() {
           throw new Error("No result found");
         }
 
+        const { userDecrypt } = await import("@/lib/fhe");
         const decryptedValue = await userDecrypt(
           resultHandle as string,
           CONTRACT_ADDRESS,

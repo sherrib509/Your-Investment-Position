@@ -9,6 +9,9 @@ import { Assessment } from "@/components/Assessment";
 import { Result } from "@/components/Result";
 import { SubmitHandler } from "@/components/SubmitHandler";
 
+// Disable static generation - FHE SDK requires browser environment
+export const dynamic = 'force-dynamic';
+
 export default function Home() {
   const { isConnected } = useAccount();
   const { appState, setAppState, setFhevmStatus, setFhevmError, reset } = useStore();
