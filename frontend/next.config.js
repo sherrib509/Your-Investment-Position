@@ -3,7 +3,6 @@ const webpack = require("webpack");
 
 const nextConfig = {
   reactStrictMode: false,
-  output: "standalone",
   webpack: (config, { isServer }) => {
     config.resolve.fallback = { 
       fs: false, 
