@@ -77,16 +77,14 @@ export function Header() {
             </div>
 
             {/* Contract Address */}
-            {CONTRACT_ADDRESS !== "0x0000000000000000000000000000000000000000" && (
-              <a
-                href={`https://sepolia.etherscan.io/address/${CONTRACT_ADDRESS}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-gray-500 hover:text-teal-600 transition-colors px-3 py-1.5 bg-gray-50 rounded-full"
-              >
-                📄 {shortenAddress(CONTRACT_ADDRESS)}
-              </a>
-            )}
+            <a
+              href={`https://sepolia.etherscan.io/address/${CONTRACT_ADDRESS}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-xs text-gray-500 hover:text-teal-600 transition-colors px-3 py-1.5 bg-gray-50 rounded-full"
+            >
+              📄 {shortenAddress(CONTRACT_ADDRESS)}
+            </a>
 
             {/* Wallet Address */}
             <button
