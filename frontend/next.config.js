@@ -2,7 +2,8 @@
 const webpack = require("webpack");
 
 const nextConfig = {
-  reactStrictMode: false, // Disable to prevent double effect calls
+  reactStrictMode: false,
+  output: "standalone",
   webpack: (config, { isServer }) => {
     config.resolve.fallback = { 
       fs: false, 
@@ -12,6 +13,12 @@ const nextConfig = {
       stream: false,
     };
     config.externals.push("pino-pretty", "encoding");
+    
+    // Exclude FHE SDK from server-side bundle
+    if (isServer) {
+      config.externals = config.externals || [];
+      config.externals.push("@zama-fhe/relayer-sdk");
+    }
     
     // Add polyfills for browser
     if (!isServer) {

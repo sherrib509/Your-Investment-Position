@@ -3,7 +3,6 @@
 import { useEffect, useRef } from "react";
 import { useAccount } from "wagmi";
 import { useStore } from "@/store/useStore";
-import { initFhevm, isFhevmReady, resetFhevm } from "@/lib/fhe";
 import { Header } from "@/components/Header";
 import { Welcome } from "@/components/Welcome";
 import { Assessment } from "@/components/Assessment";
@@ -20,6 +19,9 @@ export default function Home() {
     initRef.current = true;
 
     const init = async () => {
+      // Dynamic import to avoid SSR issues
+      const { initFhevm, isFhevmReady } = await import("@/lib/fhe");
+      
       if (isFhevmReady()) {
         setFhevmStatus("ready");
         return;
@@ -41,7 +43,10 @@ export default function Home() {
   useEffect(() => {
     if (!isConnected) {
       reset();
-      resetFhevm();
+      // Dynamic import to avoid SSR issues
+      import("@/lib/fhe").then(({ resetFhevm }) => {
+        resetFhevm();
+      });
       initRef.current = false;
     }
   }, [isConnected]);
